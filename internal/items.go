@@ -5,6 +5,8 @@ import (
 	"fmt"
 	"io"
 	"log"
+	"path/filepath"
+	"slices"
 	"strings"
 )
 
@@ -32,6 +34,28 @@ func (t *LineItem) Root() *LineItem {
 	}
 	return cur
 }
+
+func (t *LineItem) AsLineItems() []*LineItem {
+	items := []*LineItem{}
+	cur := t
+	for cur = t; cur.Parent != nil; cur = cur.Parent {
+		items = append(items, cur)
+	}
+	items = append(items, cur)
+	slices.Reverse(items)
+	return items
+}
+
+func (t *LineItem) AsSlice() []string {
+	texts := []string{}
+	for _, item := range t.AsLineItems() {
+		texts = append(texts, item.Text)
+	}
+	return texts
+}
+
+func (t *LineItem) AsPath() string   { return filepath.Join(t.AsSlice()...) }
+func (t *LineItem) AsDotted() string { return strings.Join(t.AsSlice(), ".") }
 
 func IndentedToItems(in io.Reader) []*LineItem {
 	items := []*LineItem{}

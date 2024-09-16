@@ -10,3 +10,5 @@ And who creates commands with dashes in them? I mean, really. This isn't the 90s
 * All packages shared between commands in `internal`
 * All commands in `cmd` including main command 
 * Exportable commands and subcommands using capitalization
+* Initialize complex command sub from nested commands file
+

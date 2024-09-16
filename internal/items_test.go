@@ -45,6 +45,60 @@ var
 	// var
 }
 
+func ExampleLineItem_AsPath() {
+
+	in := strings.NewReader(`
+usr
+  bin
+  local
+    bin
+var
+  local
+  log
+  game
+    gui
+    tui
+`)
+
+	items := internal.IndentedToItems(in)
+
+	fmt.Println(items[3].AsPath())
+	fmt.Println(items[8].AsPath())
+
+	fmt.Println()
+
+	// Output:
+	// usr/local/bin
+	// var/game/gui
+}
+
+func ExampleLineItem_AsDotted() {
+
+	in := strings.NewReader(`
+usr
+  bin
+  local
+    bin
+var
+  local
+  log
+  game
+    gui
+    tui
+`)
+
+	items := internal.IndentedToItems(in)
+
+	fmt.Println(items[3].AsDotted())
+	fmt.Println(items[8].AsDotted())
+
+	fmt.Println()
+
+	// Output:
+	// usr.local.bin
+	// var.game.gui
+}
+
 func ExampleIndentedToItems_String() {
 
 	in := strings.NewReader(`
